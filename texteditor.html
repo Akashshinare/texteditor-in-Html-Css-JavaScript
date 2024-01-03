@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEXTEDITOR APP IN JS</title>
+    <style>
+        .mdiv{
+            height: 100vh;
+            width: 100%;
+            position: fixed;
+            top:0px;
+            left:0px;
+            display: flex;
+            justify-content: center;
+            background-color: yellow;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .text{
+            margin-top: 30px;
+        }
+        textarea {
+            box-sizing: border-box;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid black;
+            border-radius: 5px;
+            font-weight: bolder;
+        }
+        .my-button{
+            border-radius: 15px;
+            box-shadow: 0 0 5px cyan,
+            0 0 25px cyan;
+            margin: 25px;
+            background-color: aqua;
+            border: 2PX solid black;
+            font-weight: bolder;
+        }
+        .my-button:hover{
+            box-shadow: 0 0 5px cyan,
+            0 0 25px cyan, 0 0 50px cyan, 0 0 100PX cyan, 0 0 200PX cyan;
+            transform: scale(1.1);
+        }
+        #info {
+            margin-top: 10px;
+            background-color: white;
+            color: red;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="mdiv">
+        <div class="text">
+            <h2 align="center">TEXT EDITOR</h2>
+            <div align="center">
+                <form>
+                    <textarea class="txtedi" id="txt" cols="50" rows="10" placeholder="ENTER YOUR TEXT" onkeypress="updateInfo()" autofocus></textarea>
+                    <br><br>
+                    <button class="my-button" type="button" onclick="uppercase()">UPPERCASE</button>
+                    <button class="my-button" type="button" onclick="lowercase()">LOWERCASE</button>
+                    <button class="my-button" type="button" onclick="bold()">BOLD</button>
+                    <button class="my-button" type="button" onclick="search()">SEARCH</button>
+                    <button class="my-button" type="button" onclick="alignLeft()">ALIGN LEFT</button>
+                    <button class="my-button" type="button" onclick="alignRight()">ALIGN RIGHT</button>
+                    <button class="my-button" type="button" onclick="alignCenter()">ALIGN CENTER</button>
+                    <button class="my-button" type="button" onclick="alignJustify()">ALIGN JUSTIFY</button>
+                    <button class="my-button" type="button" onclick="selectAll()">SELECT ALL</button>
+                    <button class="my-button" type="button" onclick="clearText()">CLEAR TEXT</button>
+                    <button id="Highlight" class="my-button" type="button" onclick="highlightText()">Highlight Text</button>
+                    <button class="my-button" type="button" onclick="reverseWords()">Reverse Words</button>
+                    <button class="my-button" type="button" onclick="insertLineBreak()">Insert Line Break</button>
+                    <button class="my-button" type="button" onclick="copyText()">Copy Text</button>
+                    <button class="my-button" type="button" onclick="pasteText()">Paste Text</button>
+
+                    <button class="my-button" type="button" onclick="increaseFontSize()">Increase Font Size</button>
+                    <button class="my-button" type="button" onclick="decreaseFontSize()">Decrease Font Size</button>
+                    <button class="my-button" type="button" onclick="toggleItalic()">Toggle Italic</button>
+                    <button class="my-button" type="button" onclick="toggleUnderline()">Toggle Underline</button>
+                    <button class="my-button" type="button" onclick="checkSpelling()">Check Spelling</button>
+                    <select  class="my-button"id="fontSelector" onchange="changeFont()">
+                        <option value="" disabled selected>Select font fontFamily</option>
+                        <option value="cursive">Cursive</option>
+                        <option value="sans-serif">Sans Serif</option>
+                        <option value="serif">Serif</option>
+                        <option value="monospace">Monospace</option>
+                        <option value="fantasy">Fantasy</option>
+                        <option value="Arial">Arial</option>
+                        <option value="Verdana">Verdana</option>
+                        <option value="Tahoma">Tahoma</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Times New Roman">Times New Roman</option>
+                    </select>
+                    <select class="my-button" id="fontSizeSelector" onchange="changeFontSize()">
+                        <option value="" disabled selected>Select Font Size</option>
+                        <option value="12px">12</option>
+                        <option value="16px">16</option>
+                        <option value="20px">20</option>
+                        <option value="24px">24</option>
+                        <option value="28px">28</option>
+                    </select>
+                    <select class="my-button" id="fontColor" onchange="changeFontColor()">
+                        <option value="" disabled selected>Select font Color</option>
+                        <option value="yellow">YELLOW</option>
+                        <option value="blue">BLUE</option>
+                        <option value="green">GREEN</option>
+                        <option value="red">RED</option>
+                        <option value="orange">ORANGE</option>
+                        <option value="purple">PURPLE</option>
+                        <option value="pink">PINK</option>
+                        <option value="brown">BROWN</option>
+                        <option value="gray">GRAY</option>
+                    </select>
+                    <br><br>
+                    <h3 style="background-color: white; color: red; font-weight: bolder;" id="info">Your text contains 0 words and 0 characters</h3>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let txt = document.getElementById("txt");
+        let info = document.getElementById("info");
+
+        function uppercase(){
+            txt.value = txt.value.toUpperCase();
+        }
+        function lowercase(){
+            txt.value = txt.value.toLowerCase();
+        }
+        function bold(){
+            txt.style.fontWeight="bolder";
+        }
+        function alignLeft() {
+        txt.style.textAlign = "left";
+    }
+
+    function alignRight() {
+        txt.style.textAlign = "right";
+    }
+
+    function alignCenter() {
+        txt.style.textAlign = "center";
+    }
+    function alignJustify() {
+        txt.style.textAlign = "justify";
+    }
+    function selectAll() {
+        txt.select();
+    }
+    function clearText() {
+        txt.value = '';
+    }
+    function highlightText() {
+        txt.select();
+    }
+    function reverseWords() {
+        txt.value = txt.value.split(' ').reverse().join(' ');
+    }
+    function insertLineBreak() {
+        txt.value += '\n';
+    }
+    function copyText() {
+            txt.select();
+            document.execCommand("copy");
+            alert("Copied: " + txt.value);
+        }
+
+        function pasteText() {
+            txt.select();
+            document.execCommand("paste");
+            alert("Pasted: " + txt.value);
+        }
+    
+        function updateInfo(){
+            let text = txt.value;
+            info.innerHTML = `Your text contains ${text.split(' ').length} words and ${text.length} characters`
+        }
+        function search() {
+            let str = prompt("Enter something to search");
+            let text = txt.value;
+            if(text.includes(str)){
+                alert(`yes ${str} is present`);
+            }else{
+                alert(` ${str} is not present`);
+            }
+        }
+
+        function changeFont() {
+        let fontSelector = document.getElementById('fontSelector');
+        let selectedFont = fontSelector.value;
+
+        let text = document.getElementById('txt');
+        text.style.fontFamily = selectedFont;
+    }
+    function changeFontColor() {
+        var fontColor = document.getElementById('fontColor');
+        var selectedColor = fontColor.value;
+
+        txt.style.color = selectedColor;
+    }
+
+    function changeFontSize() {
+            let fontSizeSelector = document.getElementById('fontSizeSelector');
+            let selectedFontSize = fontSizeSelector.value;
+            txt.style.fontSize = selectedFontSize;
+        }
+
+
+    // Additional functions for new buttons
+    function increaseFontSize() {
+            let currentSize = parseInt(window.getComputedStyle(txt, null).getPropertyValue('font-size'));
+            txt.style.fontSize = (currentSize + 2) + 'px';
+        }
+
+        function decreaseFontSize() {
+            let currentSize = parseInt(window.getComputedStyle(txt, null).getPropertyValue('font-size'));
+            txt.style.fontSize = (currentSize - 2) + 'px';
+        }
+
+        function toggleItalic() {
+            txt.style.fontStyle = (txt.style.fontStyle === 'italic') ? 'normal' : 'italic';
+        }
+
+        function toggleUnderline() {
+            txt.style.textDecoration = (txt.style.textDecoration === 'underline') ? 'none' : 'underline';
+        }
+        function checkSpelling() {
+            let text = txt.value;
+
+            // Use your spell-checking library here (e.g., hunspell-asm)
+            // Note: You'll need to include the library in your project and
+            // import it appropriately.
+
+            // For demonstration purposes, let's assume a simple check for the word "spelling"
+            if (text.includes("spelling")) {
+                alert("No spelling mistakes found!");
+            } else {
+                alert("Spelling mistake detected!");
+            }
+        }
+
+
+
+    </script>
+</body>
+</html>
